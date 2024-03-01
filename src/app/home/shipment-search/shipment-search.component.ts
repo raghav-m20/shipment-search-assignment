@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { DataService } from 'src/app/data.service';
 import { Shipment } from 'src/app/shipment/shipment.model';
 
@@ -19,8 +20,11 @@ export class ShipmentSearchComponent {
   errorMessage = '';
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private dataService: DataService
-  ) { }
+    private dataService: DataService,
+    public translate: TranslateService
+  ) {
+    console.log(this.translate.instant('home.LABEL_WhatDoYouWantToDO'), 'hello')
+   }
 
   ngOnInit() {
     this.shipmentSearchForm = this.formBuilder.group({
@@ -107,7 +111,7 @@ export class ShipmentSearchComponent {
         setTimeout(()=>{
           this.errorMessage = '';
           this.apiFailed = this.showMessage = false;
-        }, 200000)
+        }, 2000)
       }
     })
   }

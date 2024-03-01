@@ -2,10 +2,10 @@
     <div class="row justify-content-center align-items-center">
         <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4" *ngIf="!loading && !showMessage">
             <div class="text-center mt-4">
-                <h4>What do you want to do?</h4>
+                <h4>{{'home.LABEL_WhatDoYouWantToDO' | translate}}</h4>
                 <div class="card p-4">
                     <div class="card-header text-center">
-                        <h4 class="fw-bold">Shipment Search</h4>
+                        <h4 class="fw-bold">{{'home.LABEL_ShipmentSearchResults' | translate}}</h4>
                     </div>
                     <div class="card-body">
                         <form [formGroup]="shipmentSearchForm" (ngSubmit)="onSubmit()">

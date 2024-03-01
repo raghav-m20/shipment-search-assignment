@@ -6,6 +6,7 @@ import { ShipmentSearchComponent } from './shipment-search/shipment-search.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShipmentModule } from '../shipment/shipment.module';
 import { SharedModule } from '../shared/shared.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     HomeRoutingModule,
     ShipmentModule,
-    SharedModule
+    SharedModule,
+    TranslateModule.forChild()
   ],
   exports: [ShipmentSearchComponent]
 })

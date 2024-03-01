@@ -7,7 +7,7 @@
                         <span class="text-primary backicon">&lt;</span>
                     </button>
                     <div class="vertical-line"></div>
-                    <h5 class="card-title m-0">Shipment Summary</h5>
+                    <h5 class="card-title m-0">{{'home.LABEL_ShipmentSummary' | translate}}</h5>
                 </div>
                 <!-- Display shipment number below the header text -->
                 <div class="shipment-number">
@@ -105,7 +105,7 @@
                         <!-- Your default shipment details content here -->
                     </div>
                 </ng-template>
-                <div class="show-info-link">
+                <div class="show-info-link position-absolute">
                     <span (click)="toggleInfo()" class="toggler">{{ showInfo ? 'Hide Info' : 'Show Info' }}</span>
                 </div>
             </div>
