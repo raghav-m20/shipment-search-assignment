@@ -1,0 +1,150 @@
+<div class="container p-3">
+    <div class="card" *ngIf="!loading && !showMessage">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-column"> <!-- Use flex-column to stack items vertically -->
+                <div class="d-flex align-items-center"> <!-- Align items horizontally -->
+                    <button class="btn btn-reset btn-back" (click)="goBack()">
+                        <span class="text-primary backicon">&lt;</span>
+                    </button>
+                    <div class="vertical-line"></div>
+                    <h5 class="card-title m-0">Shipment Summary</h5>
+                </div>
+                <!-- Display shipment number below the header text -->
+                <div class="shipment-number">
+                    {{ shipmentNo }}
+                </div>
+            </div>
+            <button type="button" class="btn closebtn" (click)="goBack()">Close</button>
+        </div>
+        <div class="card-body">
+            <!-- Display shipment details -->
+            <div class="shipment-data">
+                <div *ngIf="showInfo; else defaultDetails" class="shipment-details">
+                    <div class="status current-status"
+                        [ngClass]="{'cancelled': shipmentDetails.Status === 'Cancelled'}">{{
+                        shipmentDetails.Status }}</div>
+                    <div class="row">
+                        <div class="detail-row col-md-4">
+                            <span class="detail-label">Shipment No:</span> <span>{{ shipmentDetails.ShipmentNo }}</span>
+                        </div>
+                        <div class="detail-row col-md-4">
+                            <span class="detail-label">{{shipmentDetails.DeliveryMethod === 'PICK' ? 'Expected Pick Up
+                                Date' :
+                                'Expected Ship Date'}}:</span> <span>{{
+                                shipmentDetails.ExpectedShipmentDate }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="detail-row col-md-4">
+                            <span class="detail-label" *ngIf="shipmentDetails.DeliveryMethod != 'PICK'">Carrier:</span>
+                            <span>{{ shipmentDetails.ScacAndService }}</span>
+                        </div>
+                        <div class="detail-row col-md-4">
+                            <span class="detail-label">Customer Info:</span>
+                            <span>{{ shipmentDetails.BillToAddress.FirstName }} {{
+                                shipmentDetails.BillToAddress.LastName
+                                }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.Phonenumber }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.EmailID }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="detail-row col-md-4 assignee"
+                            [ngClass]="{'move-assignee': shipmentDetails.DeliveryMethod === 'PICK'}">
+                            <span class="detail-label">Assigned To:</span> <span>{{ shipmentDetails.AssignedToUserId
+                                }}</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="detail-row col-md-4">
+                            <span class="detail-label">Ship To:</span>
+                            <span>{{ shipmentDetails.ToAddress.FirstName }} {{ shipmentDetails.ToAddress.LastName
+                                }}</span>
+                            <span>{{ shipmentDetails.ToAddress.AddressID }}</span>
+                            <span>{{ shipmentDetails.ToAddress.AddressLine1 }}</span>
+                            <span>{{ shipmentDetails.ToAddress.City }}, {{ shipmentDetails.ToAddress.State }}, {{
+                                shipmentDetails.ToAddress.ZipCode }}</span>
+                            <span>{{ shipmentDetails.ToAddress.Country }}</span>
+                        </div>
+
+                        <div class="detail-row col-md-4"
+                            [ngClass]="{'move-billto': shipmentDetails.DeliveryMethod === 'PICK', billto: shipmentDetails.DeliveryMethod != 'PICK'}">
+                            <span class="detail-label">Bill To:</span>
+                            <span>{{ shipmentDetails.BillToAddress.FirstName }} {{
+                                shipmentDetails.BillToAddress.LastName
+                                }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.AddressID }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.AddressLine1 }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.City }}, {{ shipmentDetails.BillToAddress.State }},
+                                {{
+                                shipmentDetails.BillToAddress.ZipCode }}</span>
+                            <span>{{ shipmentDetails.BillToAddress.Country }}</span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #defaultDetails>
+                    <div class="default-shipment-details">
+                        <div class="row">
+                            <div class="status current-status"
+                                [ngClass]="{'cancelled': shipmentDetails.Status === 'Cancelled'}">{{
+                                shipmentDetails.Status }}</div>
+                            <div class="detail-row col-md-4">
+                                <span class="detail-label">Shipment No:</span> <span>{{ shipmentDetails.ShipmentNo
+                                    }}</span>
+                            </div>
+                            <div class="detail-row col-md-4">
+                                <span class="detail-label">Expected Ship Date:</span> <span>{{
+                                    shipmentDetails.ExpectedShipmentDate }}</span>
+                            </div>
+                            <div class="detail-row col-md-4">
+                                <span class="detail-label">Ship To:</span>
+                                <span>{{ shipmentDetails.ToAddress.City }}, {{ shipmentDetails.ToAddress.State }}, {{
+                                    shipmentDetails.ToAddress.ZipCode }}</span>
+                            </div>
+                        </div>
+                        <!-- Your default shipment details content here -->
+                    </div>
+                </ng-template>
+                <div class="show-info-link">
+                    <span (click)="toggleInfo()" class="toggler">{{ showInfo ? 'Hide Info' : 'Show Info' }}</span>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <div class="horizontal-tab-list">
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item navitem">
+                            <span
+                                class="nav-link active activelink">Products({{shipmentDetails.ShipmentLines.TotalNumberOfRecords}})</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <div class="row mt-4">
+                    <div class="col-md-6" *ngFor="let product of shipmentDetails.ShipmentLines.ShipmentLine">
+                        <div class="product-item">
+                            <img [src]="product.OrderLine.ItemDetails.ImageUrl" alt="Product-image" width="90px"
+                                height="90px">
+                            <div class="product-details">
+                                <p style="font-weight: bolder; color: blue;">{{
+                                    product.OrderLine.ItemDetails.Description }}</p>
+                                <p>Product ID: {{ product.OrderLine.ItemDetails.ItemID }}</p>
+                                <p>Quantity: {{ product.Quantity }}
+                                    {{product.OrderLine.ItemDetails.DisplayUnitOfMeasure}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="!loading && showMessage">
+        <div class="alert alert-danger" role="alert">Something went wrong, please try again later.</div>
+    </div>
+    <div *ngIf="loading && !showMessage" class="spinner-container">
+        <app-spinner></app-spinner>
+    </div>
+</div>
+
+

@@ -1,0 +1,52 @@
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4" *ngIf="!loading && !showMessage">
+            <div class="text-center mt-4">
+                <h4>What do you want to do?</h4>
+                <div class="card p-4">
+                    <div class="card-header text-center">
+                        <h4 class="fw-bold">Shipment Search</h4>
+                    </div>
+                    <div class="card-body">
+                        <form [formGroup]="shipmentSearchForm" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Order #" formControlName="orderNo">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Shipment #"
+                                    formControlName="shipmentNo">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="First Name"
+                                    formControlName="firstName">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Last Name"
+                                    formControlName="lastName">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Email ID"
+                                    formControlName="emailId">
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" placeholder="Contact" formControlName="contact">
+                            </div>
+                            <div class="text-end mt-3">
+                                <button type="button" class="btn btn-reset">Reset</button>
+                                <button type="submit"
+                                    class="btn ms-2 btn-primary btn-submit btn-no-radius">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4 d-flex justify-content-center" *ngIf="loading && !showMessage"> <!-- Center horizontally -->
+            <app-spinner></app-spinner>
+        </div>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4" *ngIf="!loading && showMessage">
+            <div class="alert alert-danger" role="alert" *ngIf="apiFailed">{{errorMessage}}</div>
+            <div class="alert alert-danger" role="alert" *ngIf="!apiFailed">{{errorMessage}}</div>
+        </div>
+    </div>
+</div>

@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HomeModule } from './home/home.module';
+import { HttpClientModule, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { LoadingInterceptor } from './loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -10,9 +14,18 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HomeModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }
+  ],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

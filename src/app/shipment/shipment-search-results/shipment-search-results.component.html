@@ -1,0 +1,98 @@
+<div class="container p-3">
+    <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-reset btn-back" (click)="goBack()">
+                    <span class="text-primary backicon">&lt;</span>
+                </button>
+                <div class="vertical-line"></div>
+                <h5 class="card-title m-0">Shipment Search Result</h5>
+            </div>
+            <button type="button" class="btn closebtn" (click)="goBack()">Close</button>
+        </div>
+        <div class="total-records-section d-flex justify-content-between align-items-center p-3">
+            <!-- Total Records -->
+            <div><span style="font-size: 40px;">{{!appliedFilter ? allShipments.length : shipments.length}}</span>
+                results</div>
+            <!-- Filter Icon -->
+            <button type="button" class="btn filter-icon" (click)="toggleFilterPopover()">
+                <i class="fas fa-filter" [class.filter-active]="filterApplied"></i>
+            </button>
+            <!-- Filter Popover -->
+            <div class="popover" [class.show]="showFilterPopover">
+                <div class="popover-header">Refine</div>
+                <div class="popover-body">
+                    <!-- Filter Options -->
+                    <ul class="filter-options">
+                        <li *ngFor="let status of shipmentStatuses">
+                            <label class="checkbox-label">
+                                <input type="checkbox" [(ngModel)]="selectedStatuses[status]">
+                                <span class="checkmark"></span>
+                                <span>{{ status }}</span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="popover-footer">
+                    <button type="button" class="btn closebtn" (click)="closePopover()">Reset</button>
+                    <button type="button" class="btn btn-primary" (click)="applyFilter()">Apply</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="scrollable-card-body">
+            <div class="card-body">
+                <ng-container *ngFor="let shipment of shipments; let i = index">
+                    <div class="shipment-row mb-4 p-4" [class.highlighted]="selectedShipmentIndex === i">
+                        <!-- First Section -->
+                        <div class="shipment-info">
+                            <div class="shipment-section">
+                                <span class="value" (click)="selectShipment(i)">{{ shipment.OrderNo }}</span>
+                            </div>
+                            <div class="shipment-section">
+                                <span class="value">{{ shipment.ShipmentLines.TotalNumberOfRecords }} products</span>
+                            </div>
+                            <div class="shipment-section" *ngIf="shipment.DeliveryMethod === 'SHP'">
+                                <span class="label">Carrier:</span>
+                                <span class="value">{{ shipment.ScacAndService }}</span>
+                            </div>
+                            <div class="shipment-section">
+                                <span class="label">Shipment #</span>
+                                <span class="value text-primary" style="cursor: pointer;" (click)="selectShipment(i)">{{
+                                    shipment.ShipmentNo }}</span>
+                            </div>
+                        </div>
+                        <!-- Second Section -->
+                        <div class="shipment-info">
+                            <div class="shipment-section">
+                                <span class="label">Status:</span>
+                                <span class="value">{{ shipment.Status }}</span>
+                            </div>
+                            <div class="shipment-section">
+                                <span class="label">Assigned To:</span>
+                                <span class="value">{{ shipment.AssignedToUserId }}</span>
+                            </div>
+                            <div *ngIf="shipment.DeliveryMethod === 'SHP'" class="shipment-section">
+                                <span class="label">Expected Ship Date:</span>
+                                <span class="value">{{ shipment.ExpectedShipmentDate }}</span>
+                            </div>
+                            <div *ngIf="shipment.DeliveryMethod === 'PICK'" class="shipment-section">
+                                <span class="label">Expected Pickup Date:</span>
+                                <span class="value">{{ shipment.ExpectedShipmentDate }}</span>
+                            </div>
+                        </div>
+                        <!-- Third Section -->
+                        <div class="shipment-info customer-info">
+                            <div class="customer-info-header">Customer Info</div>
+                            <div class="customer-info-details">
+                                <div>{{ shipment.BillToAddress.FirstName }} {{ shipment.BillToAddress.LastName }}</div>
+                                <div>Contact: {{ shipment.BillToAddress.DayPhone }}</div>
+                                <div>Email: {{ shipment.BillToAddress.EMailID }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
