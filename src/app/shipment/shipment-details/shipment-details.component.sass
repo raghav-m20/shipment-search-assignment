@@ -19,8 +19,8 @@
 
     .closebtn
       background-color: white
-      color: blue
-      border: 1px solid blue
+      color: #0dcaf0
+      border: 1px solid #0dcaf0
       border-radius: 0
 
   .grey-section
@@ -55,37 +55,52 @@
   margin-left: 55px
 
 .product-item 
-    margin-bottom: 20px
+  margin-bottom: 20px
+  display: flex
+  align-items: flex-start
 
+.product-item img
+  margin-right: 10px
+  width: 90px
+  height: 90px
+  border: 1px solid #ccc
 
 .product-details
-    font-size: 14px
+  font-size: 14px
 
+.product-details p
+  margin: 0
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+.product-details p:first-child
+  font-weight: bold
 
 .activelink
-  color: darkblue !important
+  color: #0dcaf0 !important
   font-weight: bolder
   text-decoration: underline
 
 .show-info-link 
-    position: absolute
-    bottom: 240px
-    right: 20px
-    padding: 10px
-    border-radius: 5px
-    color: rgb(13, 110, 253)
-    cursor: pointer
+  position: absolute
+  bottom: 210px
+  right: 20px
+  padding: 10px
+  border-radius: 5px
+  color: rgb(13, 110, 253)
+  cursor: pointer
 
 @media (max-width: 768px) 
-    .show-info-link 
-        width: 100%
-        left: 340px
-        bottom: 375px
-        padding: 10px 0
-        cursor: pointer
+  .show-info-link 
+    width: 100%
+    left: 340px
+    bottom: 510px
+    padding: 10px 0
+    cursor: pointer
 
-    .product-item
-        flex-direction: column
+  .product-item
+    flex-direction: column
 
-    .product-details
-        margin-top: 10px
+  .product-details
+    margin-top: 10px

@@ -4,7 +4,7 @@
             <div class="d-flex flex-column"> <!-- Use flex-column to stack items vertically -->
                 <div class="d-flex align-items-center"> <!-- Align items horizontally -->
                     <button class="btn btn-reset btn-back" (click)="goBack()">
-                        <span class="text-primary backicon">&lt;</span>
+                        <span class="text-info backicon">&lt;</span>
                     </button>
                     <div class="vertical-line"></div>
                     <h5 class="card-title m-0">{{'home.LABEL_ShipmentSummary' | translate}}</h5>
@@ -14,7 +14,8 @@
                     {{ shipmentNo }}
                 </div>
             </div>
-            <button type="button" class="btn closebtn" (click)="goBack()">Close</button>
+            <button type="button" class="btn closebtn d-none d-md-block" (click)="goBack()">Close</button>
+            <span class="d-block d-md-none" (click)="goBack()" style="color: #0dcaf0; font-size: 35px;">&times;</span>
         </div>
         <div class="card-body">
             <!-- Display shipment details -->
@@ -126,10 +127,12 @@
                             <img [src]="product.OrderLine.ItemDetails.ImageUrl" alt="Product-image" width="90px"
                                 height="90px">
                             <div class="product-details">
-                                <p style="font-weight: bolder; color: blue;">{{
+                                <p style="font-weight: bolder; color: #0dcaf0;">{{
                                     product.OrderLine.ItemDetails.Description }}</p>
                                 <p>Product ID: {{ product.OrderLine.ItemDetails.ItemID }}</p>
                                 <p>Quantity: {{ product.Quantity }}
+                                    {{product.OrderLine.ItemDetails.DisplayUnitOfMeasure}}</p>
+                                <p class="d-block d-md-none" style="color: purple;">Packed: {{ product.Quantity }}
                                     {{product.OrderLine.ItemDetails.DisplayUnitOfMeasure}}</p>
                             </div>
                         </div>

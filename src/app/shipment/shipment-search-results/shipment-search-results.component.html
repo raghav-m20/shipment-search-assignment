@@ -3,13 +3,13 @@
         <div class="card-header d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <button class="btn btn-reset btn-back" (click)="goBack()">
-                    <span class="text-primary backicon">&lt;</span>
+                    <span class="text-info backicon">&lt;</span>
                 </button>
                 <div class="vertical-line"></div>
                 <h5 class="card-title m-0">{{ 'home.LABEL_ShipmentSearchResults' | translate }}</h5>
             </div>
             <button type="button" class="btn closebtn d-none d-md-block" (click)="goBack()">Close</button>
-            <span class="d-block d-md-none" (click)="goBack()" style="color: darkblue;">X</span>
+            <span class="d-block d-md-none" (click)="goBack()" style="color: #0dcaf0; font-size: 35px;">&times;</span>
         </div>
         <div class="total-records-section d-flex justify-content-between align-items-center p-3">
             <!-- Total Records -->
@@ -38,7 +38,7 @@
                 </div>
                 <div class="popover-footer">
                     <button type="button" class="btn closebtn" (click)="closePopover()">Reset</button>
-                    <button type="button" class="btn btn-primary" (click)="applyFilter()">Apply</button>
+                    <button type="button" class="btn btn-info" (click)="applyFilter()">Apply</button>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="shipment-section">
                                 <span class="label">Shipment #</span>
-                                <span class="value text-primary" style="cursor: pointer;" (click)="selectShipment(i)">
+                                <span class="value text-info" style="cursor: pointer;" (click)="selectShipment(i)">
                                     {{ shipment.ShipmentNo }}</span>
                             </div>
                         </div>
