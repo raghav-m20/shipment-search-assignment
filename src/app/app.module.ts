@@ -9,6 +9,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { TranslateModule, TranslateLoader, TranslateModuleConfig, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LoadingInterceptor } from './loading.interceptor';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
@@ -28,7 +29,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    InfiniteScrollModule
   ],
   providers: [
     {

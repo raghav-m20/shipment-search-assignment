@@ -12,7 +12,7 @@ export class ShipmentSearchResultsComponent {
   loading: boolean = false; 
   page: number = 1; 
   pageSize: number = 10; 
-  currentstart = 0;
+  currentstart = 1;
   end = this.pageSize;
   selectedShipmentIndex: number | null = null;
   allShipments = DataService.ShipmentSearchResults;
@@ -24,23 +24,38 @@ export class ShipmentSearchResultsComponent {
   originalShipments: any[] = [];
   originalSelectedStatuses: { [key: string]: boolean } = {};
   @ViewChild('filterIcon') filterIcon!: ElementRef;
+  displayedShipments: any[] = [];
+  itemsPerPage = 10;
+  currentPage = 1;
 
   private prevScrollPos = window.pageYOffset;
 
-  constructor(private router: Router ) { }
+  constructor(private router: Router, private dataService: DataService ) { }
 
   ngOnInit(): void {
-    this.fetchShipments(this.currentstart, this.end);
+    this.shipments = this.allShipments
+    this.loadMoreData()
   }
 
   goBack() {
     this.router.navigate(['/']);
   }
 
-  fetchShipments(start: number, end: number): void {
-    this.loading = true;
-    this.shipments = this.allShipments.slice(start, end);
-    this.loading = false;
+  onScroll() {
+    console.log("hello scrolling")
+    this.loadMoreData();
+  }
+
+  loadMoreData() {
+    const endIndex = this.currentPage * this.itemsPerPage;
+    const newShipments = this.shipments.slice(0, endIndex);
+    this.displayedShipments = [...this.displayedShipments, ...newShipments];
+    console.log("display shipments ", this.displayedShipments)
+    this.currentPage++;
+  }
+
+  toggleLoading() {
+    this.loading = !this.loading;
   }
 
   toggleFilterPopover(): void {
@@ -91,37 +106,6 @@ export class ShipmentSearchResultsComponent {
     this.appliedFilter = false;
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any): void {
-    const currentScrollPos = window.pageYOffset;
-    if (currentScrollPos > this.prevScrollPos) {
-      const totalHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
-      const bottomScroll = totalHeight - windowHeight - currentScrollPos;
-      if (bottomScroll < 100 && !this.loading) {
-        this.currentstart = this.end;
-        this.end += this.pageSize;
-        if (this.end > this.allShipments.length) {
-          this.currentstart = 0;
-          this.end = this.pageSize;
-        }
-
-        this.fetchShipments(this.currentstart, this.end);
-      }
-    } else {
-      if (this.currentstart > 0) {
-        this.end = this.currentstart;
-        this.currentstart -= this.pageSize;
-        if (this.currentstart < 0) {
-          this.currentstart = 0;
-          this.end = this.pageSize;
-        }
-
-        this.fetchShipments(this.currentstart, this.end);
-      }
-    }
-    this.prevScrollPos = currentScrollPos;
-  }
 
   selectShipment(index: number) {
     

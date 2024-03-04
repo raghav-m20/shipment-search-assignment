@@ -7,6 +7,7 @@ import { ShipmentDetailsComponent } from './shipment-details/shipment-details.co
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    InfiniteScrollModule
   ],
   exports: [
     ShipmentSearchResultsComponent

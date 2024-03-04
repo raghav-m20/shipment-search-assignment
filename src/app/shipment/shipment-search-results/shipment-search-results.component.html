@@ -6,14 +6,17 @@
                     <span class="text-primary backicon">&lt;</span>
                 </button>
                 <div class="vertical-line"></div>
-                <h5 class="card-title m-0">{{'home.LABEL_ShipmentSearchResults' | translate}}</h5>
+                <h5 class="card-title m-0">{{ 'home.LABEL_ShipmentSearchResults' | translate }}</h5>
             </div>
-            <button type="button" class="btn closebtn" (click)="goBack()">Close</button>
+            <button type="button" class="btn closebtn d-none d-md-block" (click)="goBack()">Close</button>
+            <span class="d-block d-md-none" (click)="goBack()" style="color: darkblue;">X</span>
         </div>
         <div class="total-records-section d-flex justify-content-between align-items-center p-3">
             <!-- Total Records -->
-            <div><span style="font-size: 40px;">{{!appliedFilter ? allShipments.length : shipments.length}}</span>
-                results</div>
+            <div>
+                <span style="font-size: 40px;">{{ !appliedFilter ? allShipments.length : shipments.length }}</span>
+                results
+            </div>
             <!-- Filter Icon -->
             <button type="button" class="btn filter-icon" (click)="toggleFilterPopover()">
                 <i class="fas fa-filter" [class.filter-active]="filterApplied"></i>
@@ -38,11 +41,11 @@
                     <button type="button" class="btn btn-primary" (click)="applyFilter()">Apply</button>
                 </div>
             </div>
-
         </div>
-        <div class="scrollable-card-body">
+        <div class="scrollable-card-body" infinite-scroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="500"
+            (scrolled)="onScroll()">
             <div class="card-body">
-                <ng-container *ngFor="let shipment of shipments; let i = index">
+                <ng-container *ngFor="let shipment of displayedShipments; let i = index">
                     <div class="shipment-row mb-4 p-4" [class.highlighted]="selectedShipmentIndex === i">
                         <!-- First Section -->
                         <div class="shipment-info">
@@ -58,8 +61,8 @@
                             </div>
                             <div class="shipment-section">
                                 <span class="label">Shipment #</span>
-                                <span class="value text-primary" style="cursor: pointer;" (click)="selectShipment(i)">{{
-                                    shipment.ShipmentNo }}</span>
+                                <span class="value text-primary" style="cursor: pointer;" (click)="selectShipment(i)">
+                                    {{ shipment.ShipmentNo }}</span>
                             </div>
                         </div>
                         <!-- Second Section -->

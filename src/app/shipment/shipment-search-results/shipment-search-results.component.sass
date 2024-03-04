@@ -25,6 +25,10 @@
       border: 1px solid blue
       border-radius: 0
 
+.scrollable-card-body
+  max-height: 400px
+  overflow-y: auto
+
   .card-body
     .shipment-row
       display: flex
@@ -62,10 +66,6 @@
       .customer-info-details
         div
           margin-bottom: 0.5rem
-
-.scrollable-card-body
-  max-height: 400px
-  overflow-y: auto
 
 .shipment-row
   position: relative
@@ -178,3 +178,17 @@
   .popover
     top: 100px
     right: 0
+
+
+.scrollable-card-body
+  max-height: 400px
+  overflow-y: auto
+
+.scrollable-card-body::-webkit-scrollbar
+  width: 5px
+
+.scrollable-card-body::-webkit-scrollbar-thumb
+  background-color: #ccc
+
+.scrollable-card-body::-webkit-scrollbar-thumb:hover
+  background-color: #aaa
