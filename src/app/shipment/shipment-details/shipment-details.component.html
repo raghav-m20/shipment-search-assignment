@@ -111,14 +111,12 @@
                 </div>
             </div>
             <div style="margin-top: 20px;">
-                <div class="horizontal-tab-list">
-                    <ul class="nav nav-tabs">
-                        <li class="nav-item navitem">
-                            <span
-                                class="nav-link active activelink">Products({{shipmentDetails.ShipmentLines.TotalNumberOfRecords}})</span>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="nav nav-tabs custom-tabs">
+                    <li class="nav-item">
+                        <span
+                            class="nav-link active activelink">Products ({{shipmentDetails.ShipmentLines.TotalNumberOfRecords}})</span>
+                    </li>
+                </ul>
             </div>
             <div>
                 <div class="row mt-4">
@@ -149,5 +147,3 @@
         <app-spinner></app-spinner>
     </div>
 </div>
-
-
